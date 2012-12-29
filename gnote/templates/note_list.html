@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<title>note list - gnote</title>
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/assets/css/gnote.css" />
+</head>
+
+<body>
+<div id="header">
+	<div class="header_m">
+		<a href="#">gnote (note in golang)</a>
+	</div>
+</div>
+
+<div id="bodyer">
+	<div class="wrapper gnote">
+		<h2>Note List</h2>
+		<ul class="gnote_lst">
+			{{range $.notes}}
+			<li><a href="/gnote/view?note={{.|urlquery}}">{{.|html}}</a></li>
+			{{end}}
+		</ul>
+	</div>
+	<div class="slider">
+		<div class="slider_link">
+			<h3>Manager</h3>
+			<ul>
+				<li>1. <a href="../">note list</a></li>
+				<li>2. <a href="../gnote/add">add new note</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="footer">
+	<p class="copyright">&copy; 2012 gnote (v1.0.0) power by Golang, designed by Eyhel-Chiu.</span>
+</div>
+
+</body>
+</html>

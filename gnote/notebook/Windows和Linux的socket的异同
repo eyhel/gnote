@@ -1,0 +1,26 @@
+<p>
+	1、<span>如果一个正在使用中的socket使用close来关闭之而不调用shutdown，则该socket还是处于连接中，只是在进程的文件描述符中移除了（right？）所以导致了使用那个socket的线程一直没有收到关闭信号，阻塞在socket的recv上无法被关闭。而在windows上调用closesocket就彻底地断开了连接了。</span> 
+</p>
+<p>
+	2、shutdown的参数名称不同，windows上用SD_BOTH，linux上是SHUT_RDWR。
+</p>
+3、在linux下如果不正常关闭socket会触发SIGPIPE异常，所以我使用signal( SIGPIPE, SIG_IGN );忽略之。<br />
+<p>
+	4、Linux下可以使用read，write函数操作socket，也可以使用send，recv。windows上只能使用send，recv？（不考虑udp的sendfrom和recvfrom）
+</p>
+<p>
+	<br />
+</p>
+<p>
+	<br />
+</p>
+<strong>下面是网上提供的信息：</strong><br />
+<p>
+	<br />
+</p>
+<p>
+	close —— 关闭本进程的socket id，但链接还是开着的，用这个socket id的其它进程还能用这个链接，能读或写这个socket id
+</p>
+shutdown —— 则破坏了socket 链接，读的时候可能侦探到EOF结束符，写的时候可能会收到一个SIGPIPE信号，这个信号可能直到socket buffer被填充了才收到，shutdown还有一个关闭方式的参数，0 不能再读，1不能再写，2 读写都不能。<br />
+<br />
+所以，<span style="color:#E53333;">以后关闭socket还是同时使用shutdown和close好。</span><br />

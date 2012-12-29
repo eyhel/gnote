@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<title>{{.subject|html}} - gnote</title>
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/assets/css/gnote.css" />
+<script charset="utf-8" src="/assets/js/jquery.js"></script>
+<script charset="utf-8" src="/assets/js/gnote.js"></script>
+</head>
+
+<body>
+<div id="header">
+	<div class="header_m">
+		<a href="#">gnote (note in golang)</a>
+	</div>
+</div>
+
+<div id="bodyer">
+	<div class="wrapper gnote">
+		<h2>{{.subject|html}}</h2>
+		<span id="noteContent">{{.content|html}}</span>
+		<div class="gnote_view_toolbar">
+			<input type="submit" class="btn" style="margin-right:10px;" value="edit it" onclick="changeNote();" />
+			<input type="submit" class="btn" value="delete this note" onclick="deleteNote();" />
+		</div>
+	</div>
+	<div class="slider">
+		<div class="slider_link">
+			<h3>Manager</h3>
+			<ul>
+				<li>1. <a href="../">note list</a></li>
+				<li>2. <a href="../gnote/add">add new note</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="footer">
+	<p class="copyright">&copy; 2012 gnote (v1.0.0) power by Golang, designed by Eyhel-Chiu.</span>
+</div>
+
+<script>
+function changeNote() {
+	window.location.href = '../gnote/change?note='+{{.subject|html}};
+}
+
+function deleteNote() {
+	return false;
+	if(confirm('Would you wanna DELETE this Note ???')==false)  return false;
+	window.location.href = '../gnote/del?note='+{{.subject|html}};
+}
+
+$('#noteContent').html(htmlspecialchars($('#noteContent').html()));
+</script>
+</body>
+</html>
